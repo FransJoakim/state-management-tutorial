@@ -6,6 +6,7 @@ import CartProvider from "./components/CartContext";
 import Header from "./components/Header";
 
 import { getCart, clearCart } from "@/api/cart";
+import ReviewProvider from "./products/[id]/components/ReviewsContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,8 +33,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CartProvider cart={cart}>
-          <Header clearCartAction={clearCartAction} />
-          <main className="mx-auto max-w-3xl">{children}</main>
+          <ReviewProvider>
+            <Header clearCartAction={clearCartAction} />
+            <main className="mx-auto max-w-3xl">{children}</main>
+          </ReviewProvider>
         </CartProvider>
       </body>
     </html>

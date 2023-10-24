@@ -2,14 +2,14 @@
 import { useState } from "react";
 
 import { Review } from "@/api/types";
+import { useReview } from "@/app/products/[id]/components/ReviewsContext";
 
 export default function Reviews({
-  reviews,
   addReviewAction,
 }: {
-  reviews: Review[];
   addReviewAction: (text: string, rating: number) => Promise<Review[]>;
 }) {
+  const [reviews, setReviews] = useReview();
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
 
@@ -28,7 +28,7 @@ export default function Reviews({
       <form
         onSubmit={async (evt) => {
           evt.preventDefault();
-          await addReviewAction(reviewText, reviewRating);
+          setReviews(await addReviewAction(reviewText, reviewRating));
           setReviewText("");
           setReviewRating(5);
         }}
